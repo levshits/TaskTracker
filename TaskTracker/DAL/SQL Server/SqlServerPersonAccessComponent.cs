@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using TaskTracker.Models;
 
@@ -38,7 +39,7 @@ namespace TaskTracker.DAL.SQL_Server
             return result;
         }
 
-        private Person ParseDataSetRow(SqlDataReader reader)
+        private static Person ParseDataSetRow(SqlDataReader reader)
         {
             var person = new Person
             {
@@ -65,7 +66,7 @@ namespace TaskTracker.DAL.SQL_Server
                 SqlParameter parameter = new SqlParameter();
                 parameter.ParameterName = "@Id";
                 parameter.Value = id;
-                parameter.SqlDbType = System.Data.SqlDbType.Int;
+                parameter.SqlDbType = SqlDbType.Int;
                 command.Parameters.Add(parameter);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
@@ -97,17 +98,17 @@ namespace TaskTracker.DAL.SQL_Server
             SqlParameter parameter = new SqlParameter();
             parameter.ParameterName = "@FirstName";
             parameter.Value = person.FirstName;
-            parameter.SqlDbType = System.Data.SqlDbType.VarChar;
+            parameter.SqlDbType = SqlDbType.VarChar;
             command.Parameters.Add(parameter);
             parameter = new SqlParameter();
             parameter.ParameterName = "@LastName";
             parameter.Value = person.FirstName;
-            parameter.SqlDbType = System.Data.SqlDbType.VarChar;
+            parameter.SqlDbType = SqlDbType.VarChar;
             command.Parameters.Add(parameter);
             parameter = new SqlParameter();
             parameter.ParameterName = "@MiddleName";
             parameter.Value = person.FirstName;
-            parameter.SqlDbType = System.Data.SqlDbType.VarChar;
+            parameter.SqlDbType = SqlDbType.VarChar;
             command.Parameters.Add(parameter);
             foreach (SqlParameter param in command.Parameters)
             {
@@ -129,7 +130,7 @@ namespace TaskTracker.DAL.SQL_Server
                 SqlParameter parameter = new SqlParameter();
                 parameter.ParameterName = "@Id";
                 parameter.Value = person.Id;
-                parameter.SqlDbType = System.Data.SqlDbType.Int;
+                parameter.SqlDbType = SqlDbType.Int;
                 command.Parameters.Add(parameter);
                 FillQueryParameters(person, command);
                 command.ExecuteNonQuery();
@@ -147,7 +148,7 @@ namespace TaskTracker.DAL.SQL_Server
                 SqlParameter parameter = new SqlParameter();
                 parameter.ParameterName = "@Id";
                 parameter.Value = id;
-                parameter.SqlDbType = System.Data.SqlDbType.Int;
+                parameter.SqlDbType = SqlDbType.Int;
                 command.Parameters.Add(parameter);
                 command.ExecuteNonQuery();
             }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using TaskTracker.DAL.SQL_Server;
-
-namespace TaskTracker.DAL
+﻿namespace TaskTracker.DAL.SQL_Server
 {
     public class SqlServerTaskTrackerDaoFactory:ITaskTrackerDaoFactory
     {

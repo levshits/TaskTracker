@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using TaskTracker.Models;
 
 namespace TaskTracker.DAL.SQL_Server
 {
     public class SqlServerTaskAccessComponent:ITaskAccessComponent
     {
-        private string connectionString;
+        private readonly string connectionString;
 
         public SqlServerTaskAccessComponent()
         {
@@ -54,7 +53,7 @@ namespace TaskTracker.DAL.SQL_Server
                 SqlParameter parameter = new SqlParameter();
                 parameter.ParameterName = "@Id";
                 parameter.Value = id;
-                parameter.SqlDbType = System.Data.SqlDbType.Int;
+                parameter.SqlDbType = SqlDbType.Int;
                 command.Parameters.Add(parameter);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
@@ -62,8 +61,6 @@ namespace TaskTracker.DAL.SQL_Server
                     {
                         reader.Read();
                         task = ParseFullDescriptionDatasetRow(reader);
-                        
-
                     }
                 }
 
@@ -71,7 +68,7 @@ namespace TaskTracker.DAL.SQL_Server
             return task;
         }
 
-        private Task ParseFullDescriptionDatasetRow(SqlDataReader reader)
+        private static Task ParseFullDescriptionDatasetRow(SqlDataReader reader)
         {
             var task = new Task
             {
@@ -109,7 +106,7 @@ namespace TaskTracker.DAL.SQL_Server
                     "Insert Into [Task] ([Name], [Volume], [StartDate], [EndDate], [Status], [ExecutorId]) Values (@Name, @Volume, @StartDate, @EndDate, @Status, @ExecutorId)";
                 var command = connection.CreateCommand();
                 command.CommandText = query;
-                SetAllQueryParameters(task, command);
+                FillQueryParameters(task, command);
                 command.ExecuteNonQuery();
             }
 
@@ -127,28 +124,28 @@ namespace TaskTracker.DAL.SQL_Server
                 {
                     ParameterName = "@Id",
                     Value = task.Id,
-                    SqlDbType = System.Data.SqlDbType.Int
+                    SqlDbType = SqlDbType.Int
                 };
                 command.Parameters.Add(parameter);
-                SetAllQueryParameters(task, command);
+                FillQueryParameters(task, command);
                 command.ExecuteNonQuery();
             }
         }
 
-        private void SetAllQueryParameters(Task task, SqlCommand command)
+        private static void FillQueryParameters(Task task, SqlCommand command)
         {
             SqlParameter parameter = new SqlParameter
             {
                 ParameterName = "@Name",
                 Value = task.Name,
-                SqlDbType = System.Data.SqlDbType.VarChar
+                SqlDbType = SqlDbType.VarChar
             };
             command.Parameters.Add(parameter);
             parameter = new SqlParameter
             {
                 ParameterName = "@Volume",
                 Value = task.Volume,
-                SqlDbType = System.Data.SqlDbType.Float
+                SqlDbType = SqlDbType.Float
             };
             command.Parameters.Add(parameter);
             parameter = new SqlParameter
@@ -156,7 +153,7 @@ namespace TaskTracker.DAL.SQL_Server
                 IsNullable = true,
                 ParameterName = "@StartDate",
                 Value = task.StartDate,
-                SqlDbType = System.Data.SqlDbType.Date
+                SqlDbType = SqlDbType.Date
             };
             command.Parameters.Add(parameter);
             parameter = new SqlParameter
@@ -164,14 +161,14 @@ namespace TaskTracker.DAL.SQL_Server
                 IsNullable = true,
                 ParameterName = "@EndDate",
                 Value = task.EndDate,
-                SqlDbType = System.Data.SqlDbType.Date
+                SqlDbType = SqlDbType.Date
             };
             command.Parameters.Add(parameter);
             parameter = new SqlParameter
             {
                 ParameterName = "@Status",
                 Value = task.Status,
-                SqlDbType = System.Data.SqlDbType.TinyInt
+                SqlDbType = SqlDbType.TinyInt
             };
             command.Parameters.Add(parameter);
             parameter = new SqlParameter
@@ -179,7 +176,7 @@ namespace TaskTracker.DAL.SQL_Server
                 IsNullable = true,
                 ParameterName = "@ExecutorId",
                 Value = task.ExecutorId,
-                SqlDbType = System.Data.SqlDbType.Int
+                SqlDbType = SqlDbType.Int
             };
             command.Parameters.Add(parameter);
             foreach (SqlParameter param in command.Parameters)
@@ -202,7 +199,7 @@ namespace TaskTracker.DAL.SQL_Server
                 SqlParameter parameter = new SqlParameter();
                 parameter.ParameterName = "@Id";
                 parameter.Value = id;
-                parameter.SqlDbType = System.Data.SqlDbType.Int;
+                parameter.SqlDbType = SqlDbType.Int;
                 command.Parameters.Add(parameter);
                 command.ExecuteNonQuery();
             }
