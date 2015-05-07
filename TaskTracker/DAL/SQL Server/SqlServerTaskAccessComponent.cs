@@ -74,7 +74,7 @@ namespace TaskTracker.DAL.SQL_Server
             {
                 Id = reader.GetInt32(0),
                 Name = reader.GetString(1),
-                Volume = (float) reader.GetDouble(2),
+                Volume = reader.GetString(2),
                 Status = (TaskStatus) reader.GetInt16(5)
             };
             if (!reader.IsDBNull(3))
@@ -145,7 +145,7 @@ namespace TaskTracker.DAL.SQL_Server
             {
                 ParameterName = "@Volume",
                 Value = task.Volume,
-                SqlDbType = SqlDbType.Float
+                SqlDbType = SqlDbType.Text
             };
             command.Parameters.Add(parameter);
             parameter = new SqlParameter

@@ -11,7 +11,7 @@ namespace TaskTracker.Models
         public String Name { get; set; }
         [Required]
         [Display(Name = "Volume")]
-        public float Volume { get; set; }
+        public String Volume { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Start date")]
         public DateTime? StartDate { get; set; }
