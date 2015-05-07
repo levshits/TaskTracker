@@ -102,12 +102,12 @@ namespace TaskTracker.DAL.SQL_Server
             command.Parameters.Add(parameter);
             parameter = new SqlParameter();
             parameter.ParameterName = "@LastName";
-            parameter.Value = person.FirstName;
+            parameter.Value = person.LastName;
             parameter.SqlDbType = SqlDbType.VarChar;
             command.Parameters.Add(parameter);
             parameter = new SqlParameter();
             parameter.ParameterName = "@MiddleName";
-            parameter.Value = person.FirstName;
+            parameter.Value = person.MiddleName;
             parameter.SqlDbType = SqlDbType.VarChar;
             command.Parameters.Add(parameter);
             foreach (SqlParameter param in command.Parameters)
